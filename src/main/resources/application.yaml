@@ -1,0 +1,60 @@
+# --> Spring core Configs
+spring:
+  application:
+    name: AirPulse
+
+# --> Spring GenAi Configs
+  ai:
+    model:
+      chat: google-genai
+
+    google:
+      genai:
+        api-key: ${GENAI_API_KEY}
+
+        chat:
+          options:
+            model: gemini-2.0-flash
+            temperature: 0.7
+            max-output-tokens: 1024
+
+  # --> MySql Configs
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  # --> JPA Configs
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  jta:
+    enabled: false
+
+# --> Liquibase Configs
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+# --> Spring Security Configs
+  security:
+    user:
+      name: user
+      password: 1234
+
+# --> Server Configs
+server:
+  address: localhost
+  port: 8070
+
+# --> Logging Configs
+logging:
+  level:
+    org.springframework.ai: debug
+    org.springframework.security: debug
+    root: info

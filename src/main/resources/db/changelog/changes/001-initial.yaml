@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ALOK
+      changes:
+        - createTable:
+            tableName: test_table
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 2
+      author: ALOK
+      changes:
+        - insert:
+            tableName: test_table
+            columns:
+              - column:
+                  name: name
+                  value: Alok
+        - insert:
+            tableName: test_table
+            columns:
+              - column:
+                  name: name
+                  value: Bot
