@@ -8,7 +8,7 @@ public class AirPulseApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AirPulseApplication.class, args);
-		System.out.println("Pulse Is High !!!");
+		System.out.println(Constants.START_MESSAGE);
 	}
 
 }
