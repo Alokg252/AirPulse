@@ -44,8 +44,8 @@ spring:
 # --> Spring Security Configs
   security:
     user:
-      name: user
-      password: 1234
+      name: ${USERNAME}
+      password: ${PASSWORD}
 
 # --> Server Configs
 server:
@@ -58,3 +58,7 @@ logging:
     org.springframework.ai: debug
     org.springframework.security: debug
     root: info
+
+# --> Jwt Configs
+jwt:
+  secret: ${JWT_SECRET}
