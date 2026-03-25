@@ -3,9 +3,13 @@ package com.flarecon.AirPulse.model;
 import com.flarecon.AirPulse.model.core.AbstractAuditingEntity;
 import com.flarecon.AirPulse.model.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "flight_booking")
+@Getter
+@Setter
 public final class FlightBooking extends AbstractAuditingEntity {
 
     @Id
