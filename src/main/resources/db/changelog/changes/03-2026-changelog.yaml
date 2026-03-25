@@ -55,3 +55,54 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: users
 
+  - changeSet:
+      id: 20260325-01
+      author: ALOK
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_flights
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: flight_number
+                  type: VARCHAR(255)
+              - column:
+                  name: from_city
+                  type: VARCHAR(255)
+              - column:
+                  name: to_city
+                  type: VARCHAR(255)
+              - column:
+                  name: departure_time
+                  type: DATETIME
+              - column:
+                  name: arrival_time
+                  type: DATETIME
+              - column:
+                  name: price
+                  type: DOUBLE
+              - column:
+                  name: available_seats
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_date
+                  type: DATETIME
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_date
+                  type: DATETIME
+            tableName: flights
