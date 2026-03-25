@@ -2,11 +2,13 @@ package com.flarecon.AirPulse.controller.user;
 
 import com.flarecon.AirPulse.dto.user.UserDto;
 import com.flarecon.AirPulse.model.user.User;
+import com.flarecon.AirPulse.model.user.UserGender;
 import com.flarecon.AirPulse.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,6 +25,8 @@ public class UserController {
         user.setEmail(request.get("email"));
         user.setUsername(request.get("username"));
         user.setName(request.get("name"));
+        user.setGender(UserGender.valueOf(request.get("gender")));
+        user.setDob(LocalDate.parse(request.get("dob")));
         user.setPlainPassword(request.get("password"));
         user.setUuid(UUID.randomUUID().toString());
 

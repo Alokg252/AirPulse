@@ -1,11 +1,14 @@
 package com.flarecon.AirPulse.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flarecon.AirPulse.Constants;
 import com.flarecon.AirPulse.model.core.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +28,7 @@ public final class User extends AbstractAuditingEntity {
     private String username;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
@@ -32,6 +36,10 @@ public final class User extends AbstractAuditingEntity {
 
     @Column(nullable = false)
     private String name;
+
+    private UserGender gender;
+
+    private LocalDate dob;
 
     public void setPlainPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(Constants.ENCODER_STRENGTH));
