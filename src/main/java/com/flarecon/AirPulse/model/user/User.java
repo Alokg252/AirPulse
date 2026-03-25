@@ -37,6 +37,8 @@ public final class User extends AbstractAuditingEntity {
     @Column(nullable = false)
     private String name;
 
+    @Convert(converter = UserGenderConverter.class)
+    @Column(length = 20)
     private UserGender gender;
 
     private LocalDate dob;
