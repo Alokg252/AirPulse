@@ -106,3 +106,77 @@ databaseChangeLog:
                   name: last_modified_date
                   type: DATETIME
             tableName: flights
+
+  - changeSet:
+      id: 20260325-02
+      author: ALOK
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: gender
+                  type: VARCHAR(20)
+              - column:
+                  name: dob
+                  type: DATE
+  - changeSet:
+      id: 1774411807598-1
+      author: ALOK
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_flight_booking
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_date
+                  type: DATETIME
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_date
+                  type: DATETIME
+              - column:
+                  name: flight_id
+                  type: BIGINT
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: flight_booking
+  - changeSet:
+      id: 1774411807598-2
+      author: ALOK
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: flight_id
+            baseTableName: flight_booking
+            constraintName: FK_FLIGHT_BOOKING_ON_FLIGHT
+            referencedColumnNames: id
+            referencedTableName: flights
+  - changeSet:
+      id: 1774411807598-3
+      author: ALOK
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: flight_booking
+            constraintName: FK_FLIGHT_BOOKING_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+
+
