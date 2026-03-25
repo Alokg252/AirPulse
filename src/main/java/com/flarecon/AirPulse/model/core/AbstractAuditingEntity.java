@@ -26,7 +26,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
     @Expose
-    private String createdBy;
+    private String createdBy = "SYSTEM";
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
@@ -36,7 +36,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @LastModifiedBy
     @Column(name = "last_modified_by")
     @Expose
-    private String lastModifiedBy;
+    private String lastModifiedBy = "SYSTEM";
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
