@@ -21,7 +21,7 @@ public class FlightTools {
     private final FlightRepository flightRepository;
     private final FlightBookingService flightBookingService;
 
-    @Tool(description = "Search flights with optional filters")
+    @Tool(description = "Search flights with optional filters startDate and endDate are departure date range in formate yyyy-MM-dd")
     public List<Flight> searchFlights(
             String fromCity,
             String toCity,
@@ -48,7 +48,7 @@ public class FlightTools {
                 .toList();
     }
 
-    @Tool(description = "Search flights with optional arguments just pass '' (empty or space) in the arguments you dont have ")
+    @Tool(description = "Search flights with optional arguments just pass '' (empty or space) in the arguments you don't have, date format is yyyy-MM-dd")
     public List<Flight> searchFlightsWithOptionalArgs(String fromCity, String toCity, String departureDate, String landingDate) {
         LocalDate parsedDepartureDate = parseOptionalDate(departureDate, "departureDate");
         LocalDate parsedLandingDate = parseOptionalDate(landingDate, "landingDate");
