@@ -43,6 +43,9 @@ public final class User extends AbstractAuditingEntity {
 
     private LocalDate dob;
 
+    @Transient
+    private int age;
+
     public void setPlainPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(Constants.ENCODER_STRENGTH));
     }

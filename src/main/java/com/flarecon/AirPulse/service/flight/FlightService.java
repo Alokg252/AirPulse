@@ -1,6 +1,5 @@
 package com.flarecon.AirPulse.service.flight;
 
-import com.flarecon.AirPulse.dto.flight.FlightDto;
 import com.flarecon.AirPulse.model.flight.Flight;
 import com.flarecon.AirPulse.repository.flight.FlightRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,87 +18,74 @@ public class FlightService {
     /**
      * Save a new flight
      */
-    public FlightDto createFlight(FlightDto flightDto) {
-        Flight flight = flightDto.toEntity();
-        Flight savedFlight = flightRepository.saveAndFlush(flight);
-        return new FlightDto(savedFlight);
+    public Flight createFlight(Flight flight) {
+        return flightRepository.saveAndFlush(flight);
     }
 
     /**
      * Get flight by ID
      */
-    public FlightDto getFlightById(Long id) {
+    public Flight getFlightById(Long id) {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Flight not found with id: " + id));
-        return new FlightDto(flight);
+        return flight;
     }
 
     /**
      * Get flight by flight number
      */
-    public FlightDto getFlightByFlightNumber(String flightNumber) {
+    public Flight getFlightByFlightNumber(String flightNumber) {
         Flight flight = flightRepository.findByFlightNumber(flightNumber)
                 .orElseThrow(() -> new RuntimeException("Flight not found with number: " + flightNumber));
-        return new FlightDto(flight);
+        return flight;
     }
 
     /**
      * Get all flights
      */
-    public List<FlightDto> getAllFlights() {
-        return flightRepository.findAll()
-                .stream()
-                .map(FlightDto::new)
-                .collect(Collectors.toList());
+    public List<Flight> getAllFlights() {
+        return flightRepository.findAll();
     }
 
     /**
      * Search flights by route
      */
-    public List<FlightDto> searchFlightsByRoute(String fromCity, String toCity) {
-        return flightRepository.findByFromCityAndToCity(fromCity, toCity)
-                .stream()
-                .map(FlightDto::new)
-                .collect(Collectors.toList());
+    public List<Flight> searchFlightsByRoute(String fromCity, String toCity) {
+        return flightRepository.findByFromCityAndToCity(fromCity, toCity);
     }
 
     /**
      * Get flights from a city
      */
-    public List<FlightDto> getFlightsByFromCity(String fromCity) {
-        return flightRepository.findByFromCity(fromCity)
-                .stream()
-                .map(FlightDto::new)
-                .collect(Collectors.toList());
+    public List<Flight> getFlightsByFromCity(String fromCity) {
+        return flightRepository.findByFromCity(fromCity);
     }
 
     /**
      * Get flights to a city
      */
-    public List<FlightDto> getFlightsByToCity(String toCity) {
-        return flightRepository.findByToCity(toCity)
-                .stream()
-                .map(FlightDto::new)
-                .collect(Collectors.toList());
+    public List<Flight> getFlightsByToCity(String toCity) {
+        return flightRepository.findByToCity(toCity);
     }
 
     /**
      * Update flight
      */
-    public FlightDto updateFlight(Long id, FlightDto flightDto) {
+    public Flight updateFlight(Long id, Flight requestFlight) {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Flight not found with id: " + id));
 
-        flight.setFlightNumber(flightDto.getFlightNumber());
-        flight.setFromCity(flightDto.getFromCity());
-        flight.setToCity(flightDto.getToCity());
-        flight.setDepartureTime(flightDto.getDepartureTime());
-        flight.setArrivalTime(flightDto.getArrivalTime());
-        flight.setPrice(flightDto.getPrice());
-        flight.setAvailableSeats(flightDto.getAvailableSeats());
+        flight.setFlightNumber(requestFlight.getFlightNumber());
+        flight.setFromCity(requestFlight.getFromCity());
+        flight.setToCity(requestFlight.getToCity());
+        flight.setDepartureTime(requestFlight.getDepartureTime());
+        flight.setArrivalTime(requestFlight.getArrivalTime());
+        flight.setPrice(requestFlight.getPrice());
+        flight.setAvailableSeats(requestFlight.getAvailableSeats());
+        flight.setTotalSeats(requestFlight.getTotalSeats());
+        flight.setStatus(requestFlight.getStatus());
 
-        Flight updatedFlight = flightRepository.saveAndFlush(flight);
-        return new FlightDto(updatedFlight);
+        return flightRepository.saveAndFlush(flight);
     }
 
     /**

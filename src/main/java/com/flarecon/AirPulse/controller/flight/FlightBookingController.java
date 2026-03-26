@@ -1,6 +1,6 @@
 package com.flarecon.AirPulse.controller.flight;
 
-import com.flarecon.AirPulse.dto.flight.FlightBookingDto;
+import com.flarecon.AirPulse.model.flight.FlightBooking;
 import com.flarecon.AirPulse.service.flight.FlightBookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,10 +23,10 @@ public class FlightBookingController {
      * Request body: { "flightId": 1, "userId": 1 }
      */
     @PostMapping
-    public ResponseEntity<FlightBookingDto> createBooking(@RequestBody Map<String, Long> request) {
+    public ResponseEntity<FlightBooking> createBooking(@RequestBody Map<String, Long> request) {
         Long flightId = request.get("flightId");
         Long userId = request.get("userId");
-        FlightBookingDto booking = flightBookingService.createBooking(flightId, userId);
+        FlightBooking booking = flightBookingService.createBooking(flightId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
 
@@ -35,8 +35,8 @@ public class FlightBookingController {
      * GET /api/bookings/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FlightBookingDto> getBookingById(@PathVariable Long id) {
-        FlightBookingDto booking = flightBookingService.getBookingById(id);
+    public ResponseEntity<FlightBooking> getBookingById(@PathVariable Long id) {
+        FlightBooking booking = flightBookingService.getBookingById(id);
         return ResponseEntity.ok(booking);
     }
 
@@ -45,8 +45,8 @@ public class FlightBookingController {
      * GET /api/bookings/user/{userId}
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<FlightBookingDto>> getBookingsByUserId(@PathVariable Long userId) {
-        List<FlightBookingDto> bookings = flightBookingService.getBookingsByUserId(userId);
+    public ResponseEntity<List<FlightBooking>> getBookingsByUserId(@PathVariable Long userId) {
+        List<FlightBooking> bookings = flightBookingService.getBookingsByUserId(userId);
         return ResponseEntity.ok(bookings);
     }
 
@@ -55,8 +55,8 @@ public class FlightBookingController {
      * GET /api/bookings/flight/{flightId}
      */
     @GetMapping("/flight/{flightId}")
-    public ResponseEntity<List<FlightBookingDto>> getBookingsByFlightId(@PathVariable Long flightId) {
-        List<FlightBookingDto> bookings = flightBookingService.getBookingsByFlightId(flightId);
+    public ResponseEntity<List<FlightBooking>> getBookingsByFlightId(@PathVariable Long flightId) {
+        List<FlightBooking> bookings = flightBookingService.getBookingsByFlightId(flightId);
         return ResponseEntity.ok(bookings);
     }
 
@@ -65,8 +65,8 @@ public class FlightBookingController {
      * GET /api/bookings
      */
     @GetMapping
-    public ResponseEntity<List<FlightBookingDto>> getAllBookings() {
-        List<FlightBookingDto> bookings = flightBookingService.getAllBookings();
+    public ResponseEntity<List<FlightBooking>> getAllBookings() {
+        List<FlightBooking> bookings = flightBookingService.getAllBookings();
         return ResponseEntity.ok(bookings);
     }
 

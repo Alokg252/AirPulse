@@ -1,6 +1,6 @@
 package com.flarecon.AirPulse.controller.flight;
 
-import com.flarecon.AirPulse.dto.flight.FlightDto;
+import com.flarecon.AirPulse.model.flight.Flight;
 import com.flarecon.AirPulse.service.flight.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,8 @@ public class FlightController {
      * POST /api/flights
      */
     @PostMapping
-    public ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
-        FlightDto createdFlight = flightService.createFlight(flightDto);
+    public ResponseEntity<Flight> createFlight(@RequestBody Flight flight) {
+        Flight createdFlight = flightService.createFlight(flight);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFlight);
     }
 
@@ -31,8 +31,8 @@ public class FlightController {
      * GET /api/flights/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDto> getFlightById(@PathVariable Long id) {
-        FlightDto flight = flightService.getFlightById(id);
+    public ResponseEntity<Flight> getFlightById(@PathVariable Long id) {
+        Flight flight = flightService.getFlightById(id);
         return ResponseEntity.ok(flight);
     }
 
@@ -41,8 +41,8 @@ public class FlightController {
      * GET /api/flights/number/{flightNumber}
      */
     @GetMapping("/number/{flightNumber}")
-    public ResponseEntity<FlightDto> getFlightByFlightNumber(@PathVariable String flightNumber) {
-        FlightDto flight = flightService.getFlightByFlightNumber(flightNumber);
+    public ResponseEntity<Flight> getFlightByFlightNumber(@PathVariable String flightNumber) {
+        Flight flight = flightService.getFlightByFlightNumber(flightNumber);
         return ResponseEntity.ok(flight);
     }
 
@@ -51,8 +51,8 @@ public class FlightController {
      * GET /api/flights
      */
     @GetMapping
-    public ResponseEntity<List<FlightDto>> getAllFlights() {
-        List<FlightDto> flights = flightService.getAllFlights();
+    public ResponseEntity<List<Flight>> getAllFlights() {
+        List<Flight> flights = flightService.getAllFlights();
         return ResponseEntity.ok(flights);
     }
 
@@ -61,10 +61,10 @@ public class FlightController {
      * GET /api/flights/search?fromCity=NYC&toCity=LAX
      */
     @GetMapping("/search")
-    public ResponseEntity<List<FlightDto>> searchFlights(
+    public ResponseEntity<List<Flight>> searchFlights(
             @RequestParam String fromCity,
             @RequestParam String toCity) {
-        List<FlightDto> flights = flightService.searchFlightsByRoute(fromCity, toCity);
+        List<Flight> flights = flightService.searchFlightsByRoute(fromCity, toCity);
         return ResponseEntity.ok(flights);
     }
 
@@ -73,8 +73,8 @@ public class FlightController {
      * GET /api/flights/from/{fromCity}
      */
     @GetMapping("/from/{fromCity}")
-    public ResponseEntity<List<FlightDto>> getFlightsByFromCity(@PathVariable String fromCity) {
-        List<FlightDto> flights = flightService.getFlightsByFromCity(fromCity);
+    public ResponseEntity<List<Flight>> getFlightsByFromCity(@PathVariable String fromCity) {
+        List<Flight> flights = flightService.getFlightsByFromCity(fromCity);
         return ResponseEntity.ok(flights);
     }
 
@@ -83,8 +83,8 @@ public class FlightController {
      * GET /api/flights/to/{toCity}
      */
     @GetMapping("/to/{toCity}")
-    public ResponseEntity<List<FlightDto>> getFlightsByToCity(@PathVariable String toCity) {
-        List<FlightDto> flights = flightService.getFlightsByToCity(toCity);
+    public ResponseEntity<List<Flight>> getFlightsByToCity(@PathVariable String toCity) {
+        List<Flight> flights = flightService.getFlightsByToCity(toCity);
         return ResponseEntity.ok(flights);
     }
 
@@ -93,10 +93,10 @@ public class FlightController {
      * PUT /api/flights/{id}
      */
     @PutMapping("/{id}")
-    public ResponseEntity<FlightDto> updateFlight(
+    public ResponseEntity<Flight> updateFlight(
             @PathVariable Long id,
-            @RequestBody FlightDto flightDto) {
-        FlightDto updatedFlight = flightService.updateFlight(id, flightDto);
+            @RequestBody Flight flight) {
+        Flight updatedFlight = flightService.updateFlight(id, flight);
         return ResponseEntity.ok(updatedFlight);
     }
 

@@ -1,6 +1,5 @@
 package com.flarecon.AirPulse.service.flight;
 
-import com.flarecon.AirPulse.dto.flight.FlightBookingDto;
 import com.flarecon.AirPulse.model.flight.Flight;
 import com.flarecon.AirPulse.model.flight.FlightBooking;
 import com.flarecon.AirPulse.model.user.User;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class FlightBookingService {
     /**
      * Create a flight booking
      */
-    public FlightBookingDto createBooking(Long flightId, Long userId) {
+    public FlightBooking createBooking(Long flightId, Long userId) {
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new RuntimeException("Flight not found with id: " + flightId));
 
@@ -47,47 +45,37 @@ public class FlightBookingService {
         flight.setAvailableSeats(flight.getAvailableSeats() - 1);
         flightRepository.saveAndFlush(flight);
 
-        FlightBooking savedBooking = flightBookingRepository.saveAndFlush(booking);
-        return new FlightBookingDto(savedBooking);
+        return flightBookingRepository.saveAndFlush(booking);
     }
 
     /**
      * Get booking by ID
      */
-    public FlightBookingDto getBookingById(Long id) {
+    public FlightBooking getBookingById(Long id) {
         FlightBooking booking = flightBookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
-        return new FlightBookingDto(booking);
+        return booking;
     }
 
     /**
      * Get all bookings for a user
      */
-    public List<FlightBookingDto> getBookingsByUserId(Long userId) {
-        return flightBookingRepository.findByUserId(userId)
-                .stream()
-                .map(FlightBookingDto::new)
-                .collect(Collectors.toList());
+    public List<FlightBooking> getBookingsByUserId(Long userId) {
+        return flightBookingRepository.findByUserId(userId);
     }
 
     /**
      * Get all bookings for a flight
      */
-    public List<FlightBookingDto> getBookingsByFlightId(Long flightId) {
-        return flightBookingRepository.findByFlightId(flightId)
-                .stream()
-                .map(FlightBookingDto::new)
-                .collect(Collectors.toList());
+    public List<FlightBooking> getBookingsByFlightId(Long flightId) {
+        return flightBookingRepository.findByFlightId(flightId);
     }
 
     /**
      * Get all bookings
      */
-    public List<FlightBookingDto> getAllBookings() {
-        return flightBookingRepository.findAll()
-                .stream()
-                .map(FlightBookingDto::new)
-                .collect(Collectors.toList());
+    public List<FlightBooking> getAllBookings() {
+        return flightBookingRepository.findAll();
     }
 
     /**
