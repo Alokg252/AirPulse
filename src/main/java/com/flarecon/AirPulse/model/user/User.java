@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table(name = "users")
@@ -46,12 +47,32 @@ public final class User extends AbstractAuditingEntity {
     @Transient
     private int age;
 
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    private void populateAgeFromDob() {
+        this.age = calculateAge(this.dob);
+    }
+
     public void setPlainPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(Constants.ENCODER_STRENGTH));
     }
 
     public boolean verifyPassword(String password) {
         return BCrypt.checkpw(password, this.password);
+    }
+
+    private static int calculateAge(LocalDate dob) {
+        if (dob == null) {
+            return 0;
+        }
+
+        final LocalDate today = LocalDate.now();
+        if (dob.isAfter(today)) {
+            return 0;
+        }
+
+        return Period.between(dob, today).getYears();
     }
 
     @Override
