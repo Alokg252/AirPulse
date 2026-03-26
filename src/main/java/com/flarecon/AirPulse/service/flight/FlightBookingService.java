@@ -31,7 +31,7 @@ public class FlightBookingService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        return bookFlight(flight, user);
+        return createBooking(flight, user);
     }
 
     /**
@@ -44,10 +44,10 @@ public class FlightBookingService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
 
-        return bookFlight(flight, user);
+        return createBooking(flight, user);
     }
 
-    FlightBooking bookFlight(Flight flight, User user) {
+    FlightBooking createBooking(Flight flight, User user) {
         // Check if seats are available
         if (flight.getAvailableSeats() <= 0) {
             throw new RuntimeException("No available seats for this flight");
