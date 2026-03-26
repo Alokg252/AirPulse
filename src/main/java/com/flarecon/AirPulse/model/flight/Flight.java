@@ -1,4 +1,4 @@
-package com.flarecon.AirPulse.model;
+package com.flarecon.AirPulse.model.flight;
 
 import com.flarecon.AirPulse.model.core.AbstractAuditingEntity;
 import jakarta.persistence.*;
@@ -16,7 +16,7 @@ public final class Flight extends AbstractAuditingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "flight_number", unique = true)
+    @Column(name = "flight_number")
     private String flightNumber;
 
     @Column(name = "from_city")
@@ -35,6 +35,13 @@ public final class Flight extends AbstractAuditingEntity {
 
     @Column(name = "available_seats")
     private Integer availableSeats;
+
+    @Column(name = "total_seats")
+    private Integer totalSeats;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private FlightStatus status;
 
     @Override
     public boolean equals(Object o) {

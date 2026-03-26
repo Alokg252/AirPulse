@@ -1,6 +1,6 @@
 package com.flarecon.AirPulse.repository.flight;
 
-import com.flarecon.AirPulse.model.FlightBooking;
+import com.flarecon.AirPulse.model.flight.FlightBooking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

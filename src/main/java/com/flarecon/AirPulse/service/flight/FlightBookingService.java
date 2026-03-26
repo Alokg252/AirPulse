@@ -1,8 +1,8 @@
 package com.flarecon.AirPulse.service.flight;
 
 import com.flarecon.AirPulse.dto.flight.FlightBookingDto;
-import com.flarecon.AirPulse.model.Flight;
-import com.flarecon.AirPulse.model.FlightBooking;
+import com.flarecon.AirPulse.model.flight.Flight;
+import com.flarecon.AirPulse.model.flight.FlightBooking;
 import com.flarecon.AirPulse.model.user.User;
 import com.flarecon.AirPulse.repository.flight.FlightBookingRepository;
 import com.flarecon.AirPulse.repository.flight.FlightRepository;

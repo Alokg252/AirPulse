@@ -1,7 +1,7 @@
 package com.flarecon.AirPulse.service.flight;
 
 import com.flarecon.AirPulse.dto.flight.FlightDto;
-import com.flarecon.AirPulse.model.Flight;
+import com.flarecon.AirPulse.model.flight.Flight;
 import com.flarecon.AirPulse.repository.flight.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.flarecon.AirPulse.dto.flight;
 
-import com.flarecon.AirPulse.model.FlightBooking;
+import com.flarecon.AirPulse.model.flight.FlightBooking;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

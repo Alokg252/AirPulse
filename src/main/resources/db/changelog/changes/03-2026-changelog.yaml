@@ -178,5 +178,20 @@ databaseChangeLog:
             constraintName: FK_FLIGHT_BOOKING_ON_USER
             referencedColumnNames: id
             referencedTableName: users
-
+  - changeSet:
+      id: 20260327-01
+      author: ALOK
+      changes:
+        - addColumn:
+            tableName: flights
+            columns:
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+              - column:
+                  name: total_seats
+                  type: integer
+        - addUniqueConstraint:
+            tableName: flights
+            columnNames: flight_number, departure_time
 

@@ -1,4 +1,4 @@
-package com.flarecon.AirPulse.model;
+package com.flarecon.AirPulse.model.flight;
 
 import com.flarecon.AirPulse.model.core.AbstractAuditingEntity;
 import com.flarecon.AirPulse.model.user.User;
