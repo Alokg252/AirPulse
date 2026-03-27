@@ -3,20 +3,9 @@ spring:
   application:
     name: AirPulse
 
-# --> Spring GenAi Configs
-  ai:
-    model:
-      chat: google-genai
-
-    google:
-      genai:
-        api-key: ${GENAI_API_KEY}
-
-        chat:
-          options:
-            model: ${GENAI_MODEL}
-            temperature: 0.7
-            max-output-tokens: 1024
+# --> Profiles
+  profiles:
+    active: ${ACTIVE_MODE}
 
   # --> MySql Configs
   datasource:

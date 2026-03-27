@@ -1,0 +1,14 @@
+spring:
+
+  autoconfigure:
+    exclude: org.springframework.ai.model.google.genai.autoconfigure.chat.GoogleGenAiChatAutoConfiguration
+
+  # --> Spring Ai Ollama Config
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL}
+      chat:
+        options:
+          model: ${OLLAMA_MODEL}
+          temperature: 0.2
+          max-tokens: 1024
