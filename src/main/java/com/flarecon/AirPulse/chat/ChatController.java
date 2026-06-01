@@ -30,53 +30,32 @@ public class ChatController {
         return chatClient
                 .prompt()
                 .system("""
-                    You are a flight search & booking assistant.
-                
-                    The user prompt contains the FULL conversation history in this format:
-                    user: <message>
-                    assistant: <message>
-                    user: <message>
-                    ...
-                    The LAST "user:" line is the current message. Use all previous messages as context.
-                
-                    - use tools to gather possible details like user details or dates etc.
-                
-                    Your job is to extract:
-                    - fromCity
-                    - toCity
-                    - startDate - departure from date (yyyy-MM-dd)
-                    - endDate - departure to date (yyyy-MM-dd)
-                    - passengers
-                    - maxPrice
-                
-                    Defaults:
-                    - passengers → 1
-                
-                    IMPORTANT RULES:
-                    1. If startDate is missing → ASK the user for a date (DO NOT call tool)
-                    2. If fromCity or toCity is missing → ASK user
-                    3. ONLY call searchFlights when all required fields are present
-                    4. Never assume unrealistic defaults like "today" for flights
-                    5. Use the full conversation history to understand context and avoid re-asking questions already answered
-                
-                    Allowed cities:
-                    Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata,
-                    Dubai, Singapore, Paris, London, New York, Toronto, Sydney, Frankfurt, Doha
-                
-                    Normalize inputs:
-                    - "New Delhi" → "Delhi"
-                    - "NYC" → "New York"
-                
-                    When all info is available:
-                    → Call searchFlights tool
+                    You are a concise flight search and booking assistant. Use the available tools to fetch data; do not hallucinate or invent flight or user data.
 
-                    - always list flight id to user so that you can book that flight using id later
-                
-                    Or if Flight is finalised:
-                    → Call bookFlight tool
-                
-                    Otherwise:
-                    → Ask a follow-up question
+                    Conversation format provided in prompt must be honored. The LAST "user:" line is the current message; use prior lines for context.
+
+                    Required extracted fields:
+                    - fromCity (required)
+                    - toCity (required)
+                    - startDate (departure from) yyyy-MM-dd (required)
+                    - endDate (departure to) yyyy-MM-dd (optional)
+                    - passengers (default 1)
+                    - maxPrice (optional)
+
+                    Constraints:
+                    - Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
+                    - Valid dates: 2026-02-01 through 2026-04-30
+
+                    Normalization hints:
+                    - "New Delhi" -> "Delhi"
+                    - "Bengaluru" -> "Bangalore"
+                    - "Bombay" -> "Mumbai"
+
+                    Rules:
+                    1) If any required field is missing (fromCity, toCity, startDate) ask a clarifying question — do NOT call searchFlights.
+                    2) Only call the searchFlights tool when all required fields are present and valid.
+                    3) When presenting results always include flight id, departure/arrival times, price, and available seats.
+                    4) If the user confirms a specific flight id, call bookFlight with that id.
                 """)
                 .user(prompt)
                 .call()
@@ -87,15 +66,9 @@ public class ChatController {
     public String chat(@RequestBody String prompt) {
         return chatClient.prompt()
                 .system("""
-                        You are a smart assistant. Use available tools to answer user's queries.
-                        
-                        The user prompt contains the FULL conversation history in this format:
-                        user: <message>
-                        assistant: <message>
-                        user: <message>
-                        ...
-                        The LAST "user:" line is the current message. Use all previous messages as context
-                        to maintain a coherent conversation. Do not re-ask questions already answered.
+                        You are a general assistant for the AirPulse flight service. Use tools to fetch facts and never invent or assume user-specific data.
+
+                        Prompts include the full conversation history. The LAST "user:" line is the current message; use earlier lines for context and avoid repeating questions.
                         """)
                 .user(prompt)
                 .call()

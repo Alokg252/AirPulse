@@ -6,6 +6,7 @@ import com.flarecon.AirPulse.repository.flight.FlightRepository;
 import com.flarecon.AirPulse.service.flight.FlightBookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +22,23 @@ public class FlightTools {
     private final FlightRepository flightRepository;
     private final FlightBookingService flightBookingService;
 
-    @Tool(description = "Search flights with optional filters startDate and endDate are departure date range in formate yyyy-MM-dd")
+    @Tool(description = """
+        Search flights with optional filters. startDate and endDate are departure date range in format yyyy-MM-dd.
+        Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
+        Pass null or empty for open-ended ranges.
+        """)
     public List<Flight> searchFlights(
+            @ToolParam(description = "Origin city for departure. Allowed: Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata")
             String fromCity,
+            @ToolParam(description = "Destination city. Allowed: Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata")
             String toCity,
+            @ToolParam(description = "Departure start date in yyyy-MM-dd (inclusive)")
             String startDate,
+            @ToolParam(description = "Departure end date in yyyy-MM-dd (inclusive)")
             String endDate,
+            @ToolParam(description = "Number of passengers to search seats for. Defaults to 1 when null")
             Integer passengers,
+            @ToolParam(description = "Maximum ticket price filter")
             Double maxPrice
     ) {
 
@@ -48,8 +59,20 @@ public class FlightTools {
                 .toList();
     }
 
-    @Tool(description = "Search flights with optional arguments just pass '' (empty or space) in the arguments you don't have, date format is yyyy-MM-dd")
-    public List<Flight> searchFlightsWithOptionalArgs(String fromCity, String toCity, String departureDate, String landingDate) {
+    @Tool(description = """
+            Search flights with optional arguments. Pass '' (empty or whitespace) for arguments you don't have. Date format: yyyy-MM-dd.
+            Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
+            """)
+    public List<Flight> searchFlightsWithOptionalArgs(
+            @ToolParam(description = "Optional origin city. Use empty string to skip")
+            String fromCity,
+            @ToolParam(description = "Optional destination city. Use empty string to skip")
+            String toCity,
+            @ToolParam(description = "Optional departure date in yyyy-MM-dd. Use empty string to skip")
+            String departureDate,
+            @ToolParam(description = "Optional arrival date in yyyy-MM-dd. Use empty string to skip")
+            String landingDate
+    ) {
         LocalDate parsedDepartureDate = parseOptionalDate(departureDate, "departureDate");
         LocalDate parsedLandingDate = parseOptionalDate(landingDate, "landingDate");
 
@@ -78,7 +101,7 @@ public class FlightTools {
     }
 
     @Tool(description = "Book a flight using flight's id")
-    public FlightBooking bookFlight(Integer flightId) {
+    public FlightBooking bookFlight(@ToolParam(description = "Flight id to book") Integer flightId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return flightBookingService.createBooking(flightId.longValue(), username);
     }
