@@ -24,7 +24,6 @@ public class FlightTools {
 
     @Tool(description = """
         Search flights with optional filters. startDate and endDate are departure date range in format yyyy-MM-dd.
-        Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
         Pass null or empty for open-ended ranges.
         """)
     public List<Flight> searchFlights(
@@ -61,7 +60,6 @@ public class FlightTools {
 
     @Tool(description = """
             Search flights with optional arguments. Pass '' (empty or whitespace) for arguments you don't have. Date format: yyyy-MM-dd.
-            Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
             """)
     public List<Flight> searchFlightsWithOptionalArgs(
             @ToolParam(description = "Optional origin city. Use empty string to skip")

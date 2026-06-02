@@ -43,8 +43,13 @@ public class ChatController {
                     - maxPrice (optional)
 
                     Constraints:
-                    - Allowed cities (India only): Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Kolkata
-                    - Valid dates: 2026-02-01 through 2026-04-30
+                    - Allowed flights are:
+                            Delhi to Paris
+                            Delhi to London
+                            Mumbai to Dubai
+                            Bangalore to Singapore
+                            Delhi to New York
+                            Mumbai to Doha
 
                     Normalization hints:
                     - "New Delhi" -> "Delhi"

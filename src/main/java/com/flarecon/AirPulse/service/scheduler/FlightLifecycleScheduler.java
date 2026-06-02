@@ -29,7 +29,7 @@ public class FlightLifecycleScheduler {
         updateFlights();
     }
 
-    // TODO: fix everytime changes of same flight 
+    // TODO: fix everytime changes of same flight
     private void updateFlights() {
 
         ZonedDateTime now = ZonedDateTime.now();
