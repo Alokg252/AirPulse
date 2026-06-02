@@ -29,6 +29,7 @@ public class FlightLifecycleScheduler {
         updateFlights();
     }
 
+    // TODO: fix everytime changes of same flight 
     private void updateFlights() {
 
         ZonedDateTime now = ZonedDateTime.now();
@@ -49,14 +50,14 @@ public class FlightLifecycleScheduler {
 
                 // closer to departure → more expensive
                 if (hoursToDeparture < 6) {
-                    flight.setPrice(flight.getPrice() + 5000);
+                    flight.setPrice(increasePriceByPercent(flight.getPrice(), 0.15));
                 } else if (hoursToDeparture < 24) {
-                    flight.setPrice(flight.getPrice() + 2000);
+                    flight.setPrice(increasePriceByPercent(flight.getPrice(), 0.8));
                 }
 
                 // low seats → surge pricing
                 if (flight.getAvailableSeats() < 20) {
-                    flight.setPrice(flight.getPrice() + 3000);
+                    flight.setPrice(increasePriceByPercent(flight.getPrice(), 0.1));
                 }
             }
 
@@ -76,5 +77,9 @@ public class FlightLifecycleScheduler {
         flightRepository.saveAll(flights);
 
         System.out.println("Flight lifecycle updated at: " + now);
+    }
+
+    private Double increasePriceByPercent(Double price, Double rate) {
+        return  price + (price * rate);
     }
 }
