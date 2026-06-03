@@ -15,7 +15,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String SECRET;
-    private static final int TOKEN_EXPIRATION_HOURS = 18;
+    private static final int TOKEN_EXPIRATION_HOURS = 24 * 7; // a week
     private final SecretKey JWT_KEY;
 
     private final AuthService authService;
